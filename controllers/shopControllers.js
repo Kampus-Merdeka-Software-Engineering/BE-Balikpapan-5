@@ -49,4 +49,3 @@ module.exports = {
   createProduct,
   getProductById,
 };
-
