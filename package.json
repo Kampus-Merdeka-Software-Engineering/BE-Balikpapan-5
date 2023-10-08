@@ -10,7 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mysql": "^2.18.1"
+    "@prisma/client": "^5.4.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.6.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "prisma": "^5.4.1"
+  }
 }
