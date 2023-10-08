@@ -15,7 +15,6 @@ model user {
   name     String
   email    String   @unique
   password String
-  carts    addedProduct[]
 }
 
 model products {
@@ -39,3 +38,10 @@ model article{
   content String @db.VarChar (500)
 }
 
+model addedProduct {
+  id      Int      @id @default(autoincrement())
+  name    String
+  price   Float
+  description String?
+  
+}
