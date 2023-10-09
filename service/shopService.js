@@ -1,16 +1,17 @@
 const { prisma } = require('../config/prisma');
 
-//get all products
+// Get all products
 async function getProducts() {
   try {
-    const product = await prisma.product.findMany();
-    return product;
+    const products = await prisma.product.findMany();
+    return products;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw error;
   }
 }
 
-// fungsi mendapat fetured product
+// Fungsi untuk mendapatkan featured products
 async function getFeaturedProducts() {
   try {
     const products = await prisma.product.findMany({
@@ -18,14 +19,15 @@ async function getFeaturedProducts() {
         isFeatured: true
       },
       take: 9,
-    })
-    return product;
-  } catch(error) {
-
+    });
+    return products;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
-} 
+}
 
-//create product (non accessable for user || admin only)
+// Membuat produk (hanya dapat diakses oleh admin)
 async function createProduct(product) {
   try {
     const createdProduct = await prisma.product.create({
@@ -35,32 +37,32 @@ async function createProduct(product) {
         price: product.price,
         image: product.image
       }
-    })
+    });
     return createdProduct;
   } catch (error) {
-    throw new Error(error)
+    console.error(error);
+    throw error;
   }
 }
 
-
-// get a product by ID
+// Mendapatkan produk berdasarkan ID
 async function getProductById(productId) {
   try {
     const product = await prisma.product.findUnique({
       where: {
         id: Number(productId)
       }
-    })
-    return product
+    });
+    return product;
   } catch (error) {
-    throw new Error(error)
+    console.error(error);
+    throw error;
   }
 }
 
-
-
 module.exports = {
   getProducts,
+  getFeaturedProducts,
   createProduct,
   getProductById,
 };

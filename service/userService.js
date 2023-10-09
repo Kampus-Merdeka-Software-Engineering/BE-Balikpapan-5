@@ -1,48 +1,51 @@
-const { prisma } = require("../config/prisma");
+const { prisma } = require('../config/prisma');
 
-//create user (for sign up)
-async function newUser(user) {
+// Membuat pengguna (untuk sign up)
+async function createUser(user) {
   try {
     const userCreated = await prisma.user.create({
       data: {
         email: user.email,
         password: user.password,
-        confpass: confirm.pass,
+        confpass: user.confirmPass, // Ubah confirm.pass ke user.confirmPass
       },
     });
     return userCreated;
   } catch (error) {
-    throw new Error(error);
+    console.error(error);
+    throw error;
   }
 }
 
-//get all users
+// Mendapatkan semua pengguna
 async function getUsers() {
   try {
     const users = await prisma.user.findMany();
     return users;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw error;
   }
 }
 
-// get user by email (for log in)
-async function getSpecificUser(email, password) {
+// Mendapatkan pengguna berdasarkan email (untuk log in)
+async function getUserByEmail(email, password) {
   try {
-    const userEmail = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email: String(email),
         password: String(password),
       },
     });
-    return userEmail;
+    return user;
   } catch (error) {
-    throw new Error(error);
+    console.error(error);
+    throw error;
   }
 }
 
 module.exports = {
   getUsers,
-  newUser,
-  getSpecificUser,
+  createUser,
+  getUserByEmail,
 };

@@ -1,16 +1,17 @@
 const { prisma } = require("../config/prisma");
 
-//get all products
+// Get all products
 async function getProducts() {
   try {
-    const product = await prisma.product.findMany();
-    return product;
+    const products = await prisma.product.findMany();
+    return products;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw error;
   }
 }
 
-// get a product by ID
+// Get a product by ID
 async function getProductById(productId) {
   try {
     const product = await prisma.product.findUnique({
@@ -20,25 +21,31 @@ async function getProductById(productId) {
     });
     return product;
   } catch (error) {
-    throw new Error(error);
+    console.error(error);
+    throw error;
   }
 }
 
-// Get products by type
-const getProductsByType = async (type) => {
-    try {
-      const products = await prisma.products.findMany({
-        where: {
-          product_type: type,
-          },
-        });
-        return products;
-      } catch (error) {
-        console.error(error);
-        throw new Error('Error getting products by type');
-      }
-    };
-  
-  
-  
-  module.exports = { getAllProduct, getProductById, getProductsByType }
+// Create a product (only accessible for admin)
+async function createProduct(product) {
+  try {
+    const createdProduct = await prisma.product.create({
+      data: {
+        productname: product.productname,
+        brandname: product.brandname,
+        price: product.price,
+        image: product.image,
+      },
+    });
+    return createdProduct;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+module.exports = {
+  getProducts,
+  getProductById,
+  createProduct,
+};

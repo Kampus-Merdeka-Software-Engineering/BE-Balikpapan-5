@@ -1,58 +1,72 @@
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
-const { prisma } = require('../config/prisma');
-
-//get all added products
+// Get all added products
 async function getCart() {
   try {
-    const addedProduct = await prisma.addedProduct.findMany();
-      // {
-    //   include: {
-    //     user: true,
-    //     product: true
-    //   }
-    // });
-    return addedProduct;
+    const addedProducts = await prisma.addedProduct.findMany({
+      include: {
+        user: true,
+        product: true
+      }
+    });
+    return addedProducts;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
-
-//coba post
+// Add product to cart
 async function addProductToCart(userId, productId, quantity) {
   try {
     // Check if the user and product exist
     const thisUser = await prisma.user.findUnique({
-      where: { 
-        id: Number(userId) },
+      where: {
+        id: Number(userId)
+      }
     });
 
     const thisProduct = await prisma.product.findUnique({
-      where: { 
-        id: Number(productId) },
+      where: {
+        id: Number(productId)
+      }
     });
 
     if (!thisUser || !thisProduct) {
-      throw new Error('please login to add product to cart');
+      throw new Error('Please login to add a product to the cart');
     }
 
-    // new entry
+    // Create a new entry
     const productAdded = await prisma.addedProduct.create({
       data: {
         user: { connect: { id: userId } },
         product: { connect: { id: productId } },
         quantity
-      },
+      }
     });
 
     return productAdded;
   } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+// Get product by ID
+async function getProductByID(productId) {
+  try {
+    const product = await prisma.product.findUnique({
+      where: { id: Number(productId) }
+    });
+    return product;
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 }
 
 module.exports = {
   getCart,
+  getProductByID,
   addProductToCart
 };
-  
