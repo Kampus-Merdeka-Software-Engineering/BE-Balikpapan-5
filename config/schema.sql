@@ -74,4 +74,3 @@ ALTER TABLE order_details
 ADD FOREIGN KEY (id_user)
 REFERENCES user(id_user);
 
--- Error Code: 1005. Can't create table `havenmarket_be`.`cart_items` (errno: 150 "Foreign key constraint is incorrectly formed") ???
