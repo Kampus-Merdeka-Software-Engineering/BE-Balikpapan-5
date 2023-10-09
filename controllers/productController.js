@@ -3,7 +3,7 @@ const productService = require('../service/productService');
 // Get all products
 const getAllProduct = async (req, res) => {
   try {
-    const products = await productService.getAllProduct(); // Mengganti nama variabel 'product' menjadi 'products'
+    const products = await productService.getProduct(); // Mengganti nama variabel 'product' menjadi 'products'
     res.status(200).json({
       data: products, // Mengganti nama variabel 'product' menjadi 'products'
     });
