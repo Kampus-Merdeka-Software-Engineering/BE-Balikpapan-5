@@ -2,8 +2,8 @@ const express = require("express");
 const productController = require("../controller/productController");
 const productRoutes = express.Router();
 
-// get all products
-productRoutes.get("/", productController.getProducts);
+// Get all products
+productRoutes.get("/", productController.getAllProduct);
 
 // Create a new product
 productRoutes.post("/", productController.createProduct);
