@@ -1,19 +1,18 @@
 const productService = require('../service/shopService');
 
-// get all products
+// Get all products
 async function getProducts(req, res) {
   try {
-    const product = await productService.getProducts();
+    const products = await productService.getProducts(); // Mengganti nama variabel 'product' menjadi 'products'
     res.status(200).json({
       message: "Successfully fetched all products",
-      data: product
+      data: products, // Mengganti nama variabel 'product' menjadi 'products'
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 }
-
 
 // Create a new product
 async function createProduct(req, res) {
@@ -32,11 +31,11 @@ async function getProductById(req, res) {
   try {
     const product = await productService.getProductById(productId);
     if (!product) {
-      return res.status(404).json({ error: 'product not found' });
+      return res.status(404).json({ error: 'Product not found' });
     }
     res.status(200).json({
       message: "Successfully fetched product",
-      data: product
+      data: product,
     });
   } catch (error) {
     console.error(error);

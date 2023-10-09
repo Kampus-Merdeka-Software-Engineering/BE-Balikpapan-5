@@ -1,19 +1,18 @@
 const userService = require('../services/userService');
 
-// all user 
+// Get all users
 async function getUsers(req, res) {
   try {
-    const user = await userService.getUsers();
+    const users = await userService.getUsers(); // Mengganti nama variabel 'user' menjadi 'users'
     res.status(200).json({
       message: "Successfully fetched all users",
-      data: user
+      data: users, // Mengganti nama variabel 'user' menjadi 'users'
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 }
-
 
 // Create a new user
 async function newUser(req, res) {
@@ -26,32 +25,32 @@ async function newUser(req, res) {
   }
 }
 
-// Create user by email
+// Get a specific user by email
 async function getSpecificUser(req, res) {
   const { email } = req.query;
   if (!email) {
-    return res.status(400).json({ error: 'Email query parameter is needed' });
-  };
+    return res.status(400).json({ error: 'Email query parameter is required' });
+  }
 
   try {
     const user = await userService.getSpecificUser(email);
 
     if (!user) {
-      res.status(404).json({ error: 'User not found.' });
+      return res.status(404).json({ error: 'User not found' });
     }
-    res.status(200).json({
-      message: "successfully fetch user",
-      data: user
-      });
-    
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to return user.' });
-  }
-};
 
+    res.status(200).json({
+      message: "Successfully fetched user",
+      data: user,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to retrieve user' });
+  }
+}
 
 module.exports = {
   getUsers,
   newUser,
-  getSpecificUser
+  getSpecificUser,
 };
