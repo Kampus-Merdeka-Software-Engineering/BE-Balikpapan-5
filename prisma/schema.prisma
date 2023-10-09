@@ -17,7 +17,7 @@ model user {
   password String
 }
 
-model products {
+model product {
   id    Int   @id @unique
   name  String 
   brand String
