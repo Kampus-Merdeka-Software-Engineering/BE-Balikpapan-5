@@ -11,4 +11,4 @@ cartRoutes.post('/cart', cartController.addProductToCart);
 // get product by id 
 cartRoutes.get('/product/:productId', cartController.getProductById); // Mengubah '/cart' menjadi '/product/:productId'
 
-module.exports = cartRoutes;
+module.exports = {cartRoutes};

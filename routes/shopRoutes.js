@@ -1,14 +1,14 @@
 const express = require('express');
-const shopController = require('../controllers/shopController');
+const shopController = require('../controllers/shopControllers');
 const shopRoutes = express.Router();
 
 // Get all products
-shopRoutes.get('/', shopController.getProducts);
+shopRoutes.get('/shop', shopController.getProducts);
 
 // Create a new product
-shopRoutes.post('/', shopController.createProduct);
+shopRoutes.post('/shop', shopController.createProduct);
 
 // Get a product by ID
-shopRoutes.get('/:productId', shopController.getProductById);
+shopRoutes.get('/shop/:productId', shopController.getProductById);
 
 module.exports = { shopRoutes };
