@@ -1,9 +1,9 @@
-const productService = require('../service/shopService');
+const shopService = require('../service/shopService');
 
 // Get all products
 async function getProducts(req, res) {
   try {
-    const products = await productService.getProducts(); // Mengganti nama variabel 'product' menjadi 'products'
+    const products = await shopService.getProducts(); // Mengganti nama variabel 'product' menjadi 'products'
     res.status(200).json({
       message: "Successfully fetched all products",
       data: products, // Mengganti nama variabel 'product' menjadi 'products'
@@ -17,7 +17,7 @@ async function getProducts(req, res) {
 // Create a new product
 async function createProduct(req, res) {
   try {
-    const productCreated = await productService.createProduct(req.body);
+    const productCreated = await shopService.createProduct(req.body);
     res.status(201).json({ productCreated });
   } catch (error) {
     console.error(error);
@@ -29,7 +29,7 @@ async function createProduct(req, res) {
 async function getProductById(req, res) {
   const { productId } = req.params;
   try {
-    const product = await productService.getProductById(productId);
+    const product = await shopService.getProductById(productId);
     if (!product) {
       return res.status(404).json({ error: 'Product not found' });
     }
